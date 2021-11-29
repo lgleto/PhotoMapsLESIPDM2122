@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "788345766804",
+    "project_id": "photomap-c6965",
+    "storage_bucket": "photomap-c6965.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:788345766804:android:cf2a351d3bd6d350488581",
+        "android_client_info": {
+          "package_name": "ipca.example.photomap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "788345766804-2dmv9ocberiko2nl82gncdkef7217ee1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0VEFynoMaLjU2eUuVlz-PFv-_Sh0xaS4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "788345766804-2dmv9ocberiko2nl82gncdkef7217ee1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
