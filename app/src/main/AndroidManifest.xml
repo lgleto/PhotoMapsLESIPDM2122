@@ -24,6 +24,7 @@
             </intent-filter>
         </activity>
         <activity
+            android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name">
