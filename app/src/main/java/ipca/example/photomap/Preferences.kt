@@ -4,18 +4,12 @@ import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 
-class Preferences {
+class Preferences(activity:Activity) {
 
-    lateinit var sharedPref : SharedPreferences
+    var sharedPref : SharedPreferences = activity.getPreferences(Context.MODE_PRIVATE)
 
-    constructor(activity:Activity){
-        sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
-    }
-
-    var fireBaseToken : String
-        get() {
-            return sharedPref.getString("FIREBASE_TOKEN","")!!
-        }
+    var fireBaseToken : String?
+        get() = sharedPref.getString("FIREBASE_TOKEN","")
     set(value) {
         with (sharedPref.edit()) {
             putString("FIREBASE_TOKEN", value)
