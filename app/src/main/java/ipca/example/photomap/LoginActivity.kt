@@ -7,10 +7,14 @@ import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
+import androidx.navigation.fragment.findNavController
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import ipca.example.photomap.databinding.ActivityLoginBinding
+import java.util.*
 
 class LoginActivity : AppCompatActivity() {
 
@@ -44,10 +48,32 @@ class LoginActivity : AppCompatActivity() {
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "signInWithEmail:success")
-                        //val user = auth.currentUser
-                        val intent = Intent(this@LoginActivity , MainActivity::class.java)
-                        startActivity(intent)
-                        finish()
+                        val user = auth.currentUser
+
+
+
+
+                        val dataUser = hashMapOf(
+                            "last_login" to Timestamp(Date()),
+                            "email" to user?.email,
+                            "token" to Preferences(this@LoginActivity).fireBaseToken
+                        )
+                        val db = Firebase.firestore
+                        db.collection("users")
+                            .document(user?.uid!!)
+                            .set(dataUser)
+                            .addOnSuccessListener { documentReference ->
+                                //Log.d(TAG, "DocumentSnapshot written with ID: ${documentReference.id}")
+                                val intent = Intent(this@LoginActivity , MainActivity::class.java)
+                                startActivity(intent)
+                                finish()
+                            }
+                            .addOnFailureListener { e ->
+
+                            }
+
+
+
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.d(TAG, "signInWithEmail:failure", task.exception)

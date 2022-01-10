@@ -1,5 +1,6 @@
 package ipca.example.photomap.ui.notifications
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,10 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.ktx.Firebase
+import ipca.example.photomap.LoginActivity
+import ipca.example.photomap.MainActivity
 import ipca.example.photomap.R
 import ipca.example.photomap.databinding.FragmentNotificationsBinding
 
@@ -36,6 +41,18 @@ class NotificationsFragment : Fragment() {
             textView.text = it
         })
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.buttonLogout.setOnClickListener {
+            var firebaseAuth = FirebaseAuth.getInstance()
+            firebaseAuth.signOut()
+            val intent = Intent(requireContext() , LoginActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish()
+        }
     }
 
     override fun onDestroyView() {
