@@ -1,6 +1,5 @@
 package ipca.example.photomap.ui.home
 
-import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,14 +10,15 @@ import android.widget.ImageView
 import android.widget.ListView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import ipca.example.photomap.R
 import ipca.example.photomap.databinding.FragmentHomeBinding
+import ipca.example.photomap.models.Photo
+import ipca.example.photomap.models.User
 
 class HomeFragment : Fragment() {
 
@@ -32,6 +32,8 @@ class HomeFragment : Fragment() {
 
     val storage = Firebase.storage
     val storageRef = storage.reference
+    val db = Firebase.firestore
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,7 +53,7 @@ class HomeFragment : Fragment() {
         listView = binding.listViewPhotos
         listView.adapter = adapter
 
-        val db = Firebase.firestore
+
         db.collection("photos")
             //.whereEqualTo("state", "CA")
             .addSnapshotListener { value, e ->
@@ -94,6 +96,9 @@ class HomeFragment : Fragment() {
             val textViewDescription = rootView.findViewById<TextView>(R.id.textViewPhotoDescription)
             val imageViewPhoto = rootView.findViewById<ImageView>(R.id.imageViewPhoto)
 
+            val textViewUserName = rootView.findViewById<TextView>(R.id.textViewUserName)
+            val imageViewUserPhoto = rootView.findViewById<ImageView>(R.id.imageViewUserPhoto)
+
             textViewDescription.text = photos[position].description
 
             rootView.isClickable = true
@@ -107,6 +112,30 @@ class HomeFragment : Fragment() {
                 imageViewPhoto.setImageBitmap(bitmap)
             }?.addOnFailureListener {
                 // Handle any errors
+            }
+
+            FirebaseAuth.getInstance().currentUser?.let {
+                db.collection("users").document(it.uid)
+                    .get().addOnSuccessListener {
+                        val user = User.fromHashMap(it.data as HashMap<String, Comparable<Any>?>)
+                        textViewUserName.text = user.name
+
+                        var userPhotoRef = user.photo?.let {
+                            storageRef.child("users_photos/${user.photo}")
+
+                        }
+
+                        val ONE_MEGABYTE: Long = 1024 * 1024
+                        userPhotoRef?.getBytes(ONE_MEGABYTE)?.addOnSuccessListener {
+                            // Data for "images/island.jpg" is returned, use this as needed
+                            val bitmap = BitmapFactory.decodeByteArray(it,0, it.size)
+                            imageViewUserPhoto.setImageBitmap(bitmap)
+                        }?.addOnFailureListener {
+                            // Handle any errors
+                        }
+
+
+                    }
             }
 
             return rootView

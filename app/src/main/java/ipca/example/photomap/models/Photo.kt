@@ -1,8 +1,6 @@
-package ipca.example.photomap.ui.home
+package ipca.example.photomap.models
 
 import com.google.firebase.Timestamp
-import com.google.firebase.auth.FirebaseAuth
-import java.util.*
 import kotlin.collections.HashMap
 
 class Photo {
@@ -25,7 +23,7 @@ class Photo {
 
     companion object{
 
-        fun fromHashMap(data:HashMap<String, Comparable<Any>?>):Photo{
+        fun fromHashMap(data:HashMap<String, Comparable<Any>?>): Photo {
             val photo = Photo()
             photo.photoPath = data["photo_path"] as String?
             photo.userId = data["user"] as String?

@@ -61,7 +61,7 @@ class LoginActivity : AppCompatActivity() {
                         val db = Firebase.firestore
                         db.collection("users")
                             .document(user?.uid!!)
-                            .set(dataUser)
+                            .update(dataUser as Map<String, Any>)
                             .addOnSuccessListener { documentReference ->
                                 //Log.d(TAG, "DocumentSnapshot written with ID: ${documentReference.id}")
                                 val intent = Intent(this@LoginActivity , MainActivity::class.java)
@@ -71,9 +71,6 @@ class LoginActivity : AppCompatActivity() {
                             .addOnFailureListener { e ->
 
                             }
-
-
-
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.d(TAG, "signInWithEmail:failure", task.exception)
