@@ -16,19 +16,14 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="ipca.example.photomap.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
-
-    <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="ipca.example.photomap.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
-    <fragment
         android:id="@+id/photoFragment"
         android:name="ipca.example.photomap.ui.home.PhotoFragment"
         android:label="fragment_photo"
         tools:layout="@layout/fragment_photo" />
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="ipca.example.photomap.ui.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>

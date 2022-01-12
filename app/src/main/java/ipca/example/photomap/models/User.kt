@@ -13,10 +13,9 @@ class User {
     fun toHashMap() : HashMap<String, Comparable<Any>?> {
         val data  = hashMapOf(
             "photo"      to photo,
-            "email"      to email,
+
             "name"       to name,
-            "last_login" to last_login,
-            "token"      to token
+
         ) as HashMap<String, Comparable<Any>?>
 
         return data
